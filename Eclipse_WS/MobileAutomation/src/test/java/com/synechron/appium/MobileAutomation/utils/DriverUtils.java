@@ -13,8 +13,15 @@ import io.appium.java_client.remote.MobileCapabilityType;
 
 public class DriverUtils {
 
-	public static AndroidDriver<AndroidElement> driver = null;
+	public static AndroidDriver driver = null;
 
+	public DriverUtils() {
+		
+	}
+	public DriverUtils(AndroidDriver driver ) {
+		this.driver = driver;
+	
+	}
 	public static AndroidDriver<AndroidElement> getDriver(String deviceName, String app, String udid)
 			throws MalformedURLException {
 
@@ -78,32 +85,37 @@ public class DriverUtils {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		return driver;
 	}
-
+	/***
+	 * @author Aravind
+	 * @param identifier - id, access-id , name , classname , xpath , androidui
+	 * @param value  - webelement 
+	 * @return
+	 */
 	public static AndroidElement getElement(String identifier, String value) {
 		AndroidElement ele = null;
 		System.out.println("Finding Element using  " + identifier + " : " + value);
 		switch (identifier) {
 		case "id":
-			ele = driver.findElementById(value);
+			ele = (AndroidElement) driver.findElementById(value);
 			break;
 
 		case "access-id":
-			ele = driver.findElementByAccessibilityId(value);
+			ele = (AndroidElement) driver.findElementByAccessibilityId(value);
 			break;
 
 		case "name":
-			ele = driver.findElementByName(value);
+			ele = (AndroidElement) driver.findElementByName(value);
 			break;
 
 		case "classname":
-			ele = driver.findElementByClassName(value);
+			ele = (AndroidElement) driver.findElementByClassName(value);
 			break;
 
 		case "xpath":
-			ele = driver.findElementByXPath(value);
+			ele = (AndroidElement) driver.findElementByXPath(value);
 			break;
 		case "androidui":
-			ele = driver.findElementByAndroidUIAutomator(value);
+			ele = (AndroidElement) driver.findElementByAndroidUIAutomator(value);
 			break;
 
 		default:
@@ -113,17 +125,32 @@ public class DriverUtils {
 
 		return ele;
 	}
-
+	/***
+	 * @author Aravind
+	 * @param identifier - id, access-id , name , classname , xpath , androidui
+	 * @param value  - 
+	 * @return
+	 */
 	public static void type(String identifier, String value, String text) {
 		System.out.println("Entering Value" + text + " using  " + identifier + " : " + value);
 		getElement(identifier, value).sendKeys(text);
 	}
-
+	/***
+	 * @author Aravind
+	 * @param identifier - id, access-id , name , classname , xpath , androidui
+	 * @param value  - webelement 
+	 * @return
+	 */
 	public static void click(String identifier, String value) {
 		System.out.println("Performing Click on  " + identifier + " : " + value);
 		getElement(identifier, value).click();
 	}
-
+	/***
+	 * @author Aravind
+	 * @param identifier - id, access-id , name , classname , xpath , androidui
+	 * @param value  - webelement 
+	 * @return
+	 */
 	public static String getAttribute(String identifier, String value, String attr) {
 		String attrValue = null;
 		System.out.println("Gettring Value for " + attr + " using  " + identifier + " : " + value);
